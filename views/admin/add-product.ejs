@@ -1,0 +1,41 @@
+<%- include("../includes/head.ejs") %>
+
+<%- include("../includes/navigation.ejs") %>
+  <h1 style="text-align: center;">Admin Add Product</h1>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-6">
+            <form action="/admin/add-product" method="POST">
+              <div class="mb-3">
+                <label for="input1" class="form-label">Product Title</label>
+                <input type="text" class="form-control" name="title" value="<% if(editing){%> <%= product.title%> <% }%>">
+              </div>
+              <div class="mb-3">
+                <label for="input2" class="form-label">ImageUrl</label>
+                <input type="text" class="form-control" name="imageUrl" value="<% if(editing) {%> <%= product.imageUrl %> <% } %>">
+              </div>
+              <div class="mb-3">
+                <label for="input3" class="form-label">Description</label>
+                <textarea type="text" class="form-control" name="description" cols="5">
+                  <% if(editing){ %>
+                    <%= product.description %>
+                  <%} %>
+                </textarea> 
+              </div>
+              <div class="mb-3">
+                <label for="input4" class="form-label">Price</label>
+                <input type="text" class="form-control" name="price" value="<% if(editing){ %> <%= product.price %> <% } %>">
+              </div>
+              <div class="mb-3 text-center">
+                <!-- <button type="button" class="btn btn-primary" style="width: 150px;">Add</button>-->
+                <button type="submit" class="btn btn-success" style="width: 150px;">
+                    Add
+                </button>
+              </div> 
+            </form>
+          </div>
+        </div>
+      </div>
+    
+
+<%- include("../includes/end.ejs") %>

@@ -1,0 +1,53 @@
+<%- include("../includes/head.ejs") %>
+<%- include("../includes/navigation.ejs") %>
+
+<div class="container mt-5">
+  <% if (orders.length <= 0) { %>
+    <h1>Nothing here!</h1>
+  <% } else { %>
+    <ul class="order-list">
+      <% orders.forEach((order) => { %>
+        <li class="order">
+          <h3><i>Order #<%= order.id %></i></h3>
+          <ul class="product-list">
+            <% order.products.forEach((product) => { %>
+              <li class="product">
+                <span><%= product.title %></span>
+                <span><sub>x</sub> <%= product.orderItem.quantity %> (qty)</span>
+              </li>
+            <% }); %>
+          </ul>
+        </li>
+      <% }); %>
+    </ul>
+  <% } %>
+</div>
+
+<style>
+  .order-list {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    list-style: none;
+    padding: 0;
+    max-width: 300px;
+  }
+
+  .order {
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    padding: 10px;
+  }
+
+  .product-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .product {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #eee;
+    padding: 5px 0;
+  }
+</style>
+
+<%- include("../includes/end.ejs") %>

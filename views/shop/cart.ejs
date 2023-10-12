@@ -1,22 +1,63 @@
-<%- include("../includes/head.ejs") %>
+<%- include("../includes/head.ejs") %> <%- include("../includes/navigation.ejs")
+%>
 
-<%- include("../includes/navigation.ejs") %>
+<div class="container">
+  <h1>Cart</h1>
+  <% if (products.length > 0) { %>
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price-Per-Item</th>
+            <!-- <th scope="col">Total-Price</th> -->
+            <th>Increase</th>
+            <th>Decrease</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% products.forEach(p => { %> <% if(p.cartItem.quantity > 0) { %>
+          <tr>
+            <td><%= p.title %></td>
+            <td><%= p.cartItem.quantity %></td>
+            <td>$<%= p.price %>.00</td>
+            <!-- <td></td> -->
+            <th>
+              <form action="/cart-increase-item" method="POST">
+                <input type="hidden" value="<%= p.id %>" name="productId" />
+                <button class="btn btn-success">+</button>
+              </form>
+            </th>
+            <th>
+              <form action="/cart-decrease-item" method="POST">
+                <input type="hidden" value="<%= p.id %>" name="productId" />
+                <button class="btn btn-secondary">-</button>
+              </form>
+            </th>
+            <td>
+              <form action="/cart-delete-item" method="POST">
+                <input type="hidden" value="<%= p.id %>" name="productId" />
+                <button class="btn btn-danger" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+          <%}%> <% }); %>
+          <% if(products.length > 0) {%>
+          <form action="/order" method="POST">
+            <button class="btn btn-success" type="submit">Order Now!!</button>
+          </form>
+          <hr />
+          <%}%>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <% } else { %>
+  <p>Your cart is empty.</p>
+  <% } %>
+</div>
 
-<h1>Cart</h1>
-
-<% if(products.length > 0) {%>
-
-<% products.forEach(p => { %>
-<ul>
-    <li><%= p.productData.title %> (<%= p.qty %>)</li>
-    <form action="/cart-delete-item" method="POST">
-        <input type="hidden" value="<%= p.productData.id %>" name="productId">
-        <button class="btn btn-danger" type="submit">Delete</button>
-    </form>
-</ul>
-<% });%>
-
-<% } else {%>
-<h1>no</h1>
-<% } %>
 <%- include("../includes/end.ejs") %>
